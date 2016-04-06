@@ -17,6 +17,27 @@ var contentTypeFromExtension = function(file){
 	}
 };
  
+var wget = function(host, path, onSuccess, onError) {
+	var options = {
+	    host: host,
+	    path: path
+	};
+	var request = http.request(options, function (res) {
+	    var data = '';
+	    res.on('data', function (chunk) {
+		data += chunk;
+	    });
+	    res.on('end', function () {
+		onSuccess(data);
+	    });
+	});
+	request.on('error', function (e) {
+	    console.log('http request error: '+e.message);
+	    onError(e);
+	});
+	request.end();
+};
+
 http.createServer(function(request, response) {
  
   var uri = url.parse(request.url).pathname
