@@ -42,7 +42,25 @@ http.createServer(function(request, response) {
  
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
-  
+
+  if (uri == "/pgn/14B") {
+      wget("www.bjk2016.be", "/games/14B/games.pgn",
+	      function(data) {
+		      response.writeHead(200, {"Content-Type": "text/html"});
+		      response.write(data, "binary");
+		      response.end();
+		      return;
+	     },
+	     function(err) {
+		      response.writeHead(404, {"Content-Type": "text/plain"});
+		      response.write("404 pgn Not Found\n");
+		      response.end();
+		      return;
+	     }
+	  );
+      return;
+  }
+
   path.exists(filename, function(exists) {
     if(!exists) {
       response.writeHead(404, {"Content-Type": "text/plain"});
