@@ -22,7 +22,8 @@ var viewer = new PgnViewer(
   }  
 );  
 
-var loadPgn = function() {
+var loadPgn = function(category) {
+  if (!category) return;
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -30,13 +31,23 @@ var loadPgn = function() {
 	    viewer.setupFromPgn(xhttp.responseText);
     }
   };
-  xhttp.open("GET", '/pgn/14B', true);
+  var url = "/pgn/" + category;
+  xhttp.open("GET", url, true);
   xhttp.send();
+};
+var selectedValue = function(){
+  var s = document.getElementById("category");
+  var cat = s.value;
+  loadPgn(cat);
 };
 </script>  
 </head>
-<body onload="loadPgn()">
+<body onload="loadPgn('14B')">
 	<button onclick="loadPgn()">reload pgn</button>
+	<select id="category" onchange="loadPgn(selectedValue())">
+		<option value="14B">Boys -14</option>
+		<option value="14G">Girls -14</option>
+	</select>
 	(thanks to chesstempo pgn viewer)
 <div id="demo-container"></div>  
 <div id="demo-moves"></div>  
