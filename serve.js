@@ -17,11 +17,50 @@ var contentTypeFromExtension = function(file){
 	}
 };
  
+var wget = function(host, path, onSuccess, onError) {
+	var options = {
+	    host: host,
+	    path: path
+	};
+	var request = http.request(options, function (res) {
+	    var data = '';
+	    res.on('data', function (chunk) {
+		data += chunk;
+	    });
+	    res.on('end', function () {
+		onSuccess(data);
+	    });
+	});
+	request.on('error', function (e) {
+	    console.log('http request error: '+e.message);
+	    onError(e);
+	});
+	request.end();
+};
+
 http.createServer(function(request, response) {
  
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
-  
+
+  if (uri == "/pgn/14B") {
+      wget("www.bjk2016.be", "/games/14B/games.pgn",
+	      function(data) {
+		      response.writeHead(200, {"Content-Type": "text/html"});
+		      response.write(data, "binary");
+		      response.end();
+		      return;
+	     },
+	     function(err) {
+		      response.writeHead(404, {"Content-Type": "text/plain"});
+		      response.write("404 pgn Not Found\n");
+		      response.end();
+		      return;
+	     }
+	  );
+      return;
+  }
+
   path.exists(filename, function(exists) {
     if(!exists) {
       response.writeHead(404, {"Content-Type": "text/plain"});
