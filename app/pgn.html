@@ -40,11 +40,14 @@ var selectedValue = function(){
   var cat = s.value;
   loadPgn(cat);
 };
+var reloadPgn = function() {
+	loadPgn(selectedValue());
+};
 </script>  
 </head>
-<body onload="loadPgn('14B')">
-	<button onclick="loadPgn()">reload pgn</button>
-	<select id="category" onchange="loadPgn(selectedValue())">
+<body onload="reloadPgn()">
+	<button onclick="reloadPgn()">reload pgn</button>
+	<select id="category" onchange="reloadPgn()">
 		<option value="14B">Boys -14</option>
 		<option value="14G">Girls -14</option>
 	</select>
