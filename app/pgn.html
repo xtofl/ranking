@@ -31,7 +31,7 @@ var loadPgn = function(category) {
 	    viewer.setupFromPgn(xhttp.responseText);
     }
   };
-  var url = "/pgn/" + category;
+  var url = "/app/pgn.php";
   xhttp.open("GET", url, true);
   xhttp.send();
 };
