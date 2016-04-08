@@ -10,11 +10,19 @@ function boards() {
 	"20" => "20"
 );
 }
+function live_url($category) {
+	return "/app/live.php?category=$category";
+};
+
+function pgn_url($category) {
+	return "/app/pgn.php?category=$id";
+};
+
 
 function print_navbar_items() {
 	print('<ul>');
 	foreach(boards() as $id => $board) {
-		$url = "/app/live.php?category=$id";
+		$url = live_url($id);
 		print("<li><a href='$url'>$board</a></li>\n");
 	}
 	print('</ul>');
