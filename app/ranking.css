@@ -1,3 +1,22 @@
 body {
 	font-family: "Courier New", Courier, monospace;
 }
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+	display: inline;
+}
+
+.node {
+	stroke: #fff;
+	stroke-width: 1.5px;
+}
+
+.link {
+	stroke: #999;
+	stroke-opacity: .6;
+}

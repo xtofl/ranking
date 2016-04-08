@@ -1,6 +1,7 @@
 <?php 
 $round = $_GET["round"];
 $base = $_GET["base"];
+$category = $_GET["category"];
 ?>
 <html>
 	<head>
@@ -35,7 +36,8 @@ var loadPgn = function(category) {
 	    viewer.setupFromPgn(xhttp.responseText);
     }
   };
-  var url = "/app/pgn.php?category="+category;
+  var url = <?php
+print("\"/app/pgn.php?category=".$category."&base=$base&round=$round\""); ?>;
   xhttp.open("GET", url, true);
   xhttp.send();
 };
