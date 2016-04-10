@@ -1,5 +1,12 @@
+<?php 
+require_once('live.inc.php');
+$round = $_GET["round"];
+$base = $_GET["base"];
+?>
 <html>
 	<head>
+		<title>Bjk Live Boards hack</title>
+		<link rel="stylesheet" href="ranking.css">
 <!-- Support libraries from Yahoo YUI project -->  
 <script type="text/javascript"  
     src="http://chesstempo.com/js/pgnyui.js">  
@@ -31,14 +38,13 @@ var loadPgn = function(category) {
 	    viewer.setupFromPgn(xhttp.responseText);
     }
   };
-  var url = "/app/pgn.php";
+  var url = "/app/pgn.php?category="+category;
   xhttp.open("GET", url, true);
   xhttp.send();
 };
 var selectedValue = function(){
-  var s = document.getElementById("category");
-  var cat = s.value;
-  loadPgn(cat);
+  var cat = "<?php print($_GET["category"]); ?>";
+  return cat;
 };
 var reloadPgn = function() {
 	loadPgn(selectedValue());
@@ -47,11 +53,8 @@ var reloadPgn = function() {
 </head>
 <body onload="reloadPgn()">
 	<button onclick="reloadPgn()">reload pgn</button>
-	<select id="category" onchange="reloadPgn()">
-		<option value="14B">Boys -14</option>
-		<option value="14G">Girls -14</option>
-	</select>
 	(thanks to chesstempo pgn viewer)
+<?php print_navbar_items();?>
 <div id="demo-container"></div>  
 <div id="demo-moves"></div>  
 </body>
